@@ -14,14 +14,29 @@ const Folder = ({ explorer, onNavigate }) => {
   };
 
   const handleNewFolder = (e) => {
+    const currentTime = new Date();
+    const createdTime = currentTime.toISOString();
+
+    const modifiedTime = new Date(
+      currentTime.getTime() + 45 * 60000
+    ).toISOString();
+
+    const randomSize = `${Math.floor(
+      Math.random() * (2000 - 100 + 1) + 100
+    )}kb`;
+
     if (e.keyCode === 13 && e.target.value) {
       const newFolder = {
         id: new Date().getTime().toString(),
         name: e.target.value,
         isFolder: showInput.isFolder,
+        createdTime: createdTime,
+        modifiedTime: modifiedTime,
+        size: randomSize,
         items: [],
       };
       explorer.items.unshift(newFolder);
+
       setShowInput({
         visible: false,
         isFolder: false,
